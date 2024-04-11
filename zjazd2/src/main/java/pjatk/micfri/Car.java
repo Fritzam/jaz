@@ -1,21 +1,28 @@
 package pjatk.micfri;
 
+import java.util.List;
+
 public class Car {
+    String rodzaj_pojazdu;
     float przebieg;
-    int ilosc_kol;
     String marka;
     String model;
     String kolor;
+    String wlasciciel;
 
-    Car(String marka, String model, Float przebieg, int ilosc_kol) {
+    Car(String marka, String model, Float przebieg, String rodzaj_pojazdu) {
         this.model = model;
         this.marka = marka;
         this.przebieg = przebieg;
-        this.ilosc_kol = ilosc_kol;
+        this.rodzaj_pojazdu = rodzaj_pojazdu;
     }
 
     Car(String kolor) {
         this.kolor = kolor;
+
+    }
+
+    Car() {
 
     }
 
@@ -26,15 +33,6 @@ public class Car {
     public void setPrzebieg(float przebieg) {
         this.przebieg = przebieg;
     }
-
-    public int getIlosc_kol() {
-        return ilosc_kol;
-    }
-
-    public void setIlosc_kol(int ilosc_kol) {
-        this.ilosc_kol = ilosc_kol;
-    }
-
     public String getMarka() {
         return marka;
     }
@@ -50,4 +48,35 @@ public class Car {
     public void setModel(String model) {
         this.model = model;
     }
+    public String getRodzaj_pojazdu() {
+        return rodzaj_pojazdu;
+    }
+
+    public void setRodzaj_pojazdu(String rodzaj_pojazdu) {
+        this.rodzaj_pojazdu = rodzaj_pojazdu;
+    }
+
+    public String getKolor() {
+        return kolor;
+    }
+
+    public void setKolor(String kolor) {
+        this.kolor = kolor;
+    }
+
+    public String getWlasciciel() {
+        return wlasciciel;
+    }
+
+    public void setWlasciciel(String wlasciciel) {
+        this.wlasciciel = wlasciciel;
+    }
+
+
+    /*{
+    "marka": "Lexus",
+    "model": "IS300h",
+    "przebieg": 30000,
+    "rodzaj_pojazdu": "samochod"
+}*/
 }
