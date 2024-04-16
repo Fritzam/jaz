@@ -11,13 +11,27 @@ import java.util.List;
 @RequestMapping("/homework")
 public class PracaDomowaController {
 
-    //localhost:8080/homework/sklep/pojazdy/samochod?marka=Lexus&model=IS300&przebieg=45000
-    @GetMapping("/sklep/pojazdy/{rodzaj_pojazdu}")
-    public ResponseEntity<Car> getPath(@PathVariable String rodzaj_pojazdu,
-                                       @RequestParam String marka,
-                                       @RequestParam String model,
-                                       @RequestParam String przebieg) {
-        return ResponseEntity.ok(new Car(marka, model, Float.parseFloat(przebieg), rodzaj_pojazdu));
+    //localhost:8080/homework/sklep/pojazdy?marka=Citroen&model=C5&przebieg=200000
+    //localhost:8080/homework/sklep/pojazdy/Honda
+    @GetMapping({"/sklep/pojazdy/{rodzaj_pojazdu}", "/sklep/pojazdy"})
+    public ResponseEntity<Car> getPath(@PathVariable(required = false) String rodzaj_pojazdu,
+                                       @RequestParam(required = false) String marka,
+                                       @RequestParam(required = false) String model,
+                                       @RequestParam(required = false) String przebieg) {
+        String templateMarka = null;
+        String templateModel = null;
+        String templatePrzebieg = "0";
+        if (marka != null) {
+            templateMarka = marka;
+        }
+        if (model != null ) {
+            templateModel = model;
+        }
+        if (przebieg != null) {
+            templatePrzebieg = przebieg;
+        }
+        if (rodzaj_pojazdu != null) return ResponseEntity.ok(new Car(templateMarka, templateModel, Float.parseFloat(templatePrzebieg), rodzaj_pojazdu));
+        return ResponseEntity.ok(new Car(templateMarka, templateModel, Float.parseFloat(templatePrzebieg), null));
     }
 
     //localhost:8080/homework/sklep/pojazdy/samochody
