@@ -31,4 +31,9 @@ public class ZjazdController {
     public ResponseEntity<Car> createCar(@RequestBody Car car) {
         return ResponseEntity.ok(car);
     }
+
+    @GetMapping("/exception")
+    public ResponseEntity<Exception> throwException() {
+        return ResponseEntity.ok(new RuntimeException());
+    }
 }
