@@ -2,6 +2,7 @@ package app.MovieServiceApp.Controller;
 
 import app.MovieServiceApp.Classes.Movie;
 import app.MovieServiceApp.Service.MovieService;
+import app.MovieServiceApp.Service.Validator;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -13,9 +14,12 @@ import java.util.List;
 @RestController
 public class MovieController {
     private final MovieService movieService;
-    MovieController(MovieService movieService) {
+    private final Validator validator;
+    MovieController(MovieService movieService, Validator validator) {
         this.movieService = movieService;
+        this.validator = validator;
     }
+
     @GetMapping("/Movies")
     public ResponseEntity<List<Movie>> getMovieList() {
         return ResponseEntity.ok(movieService.getMovies());
@@ -23,24 +27,24 @@ public class MovieController {
 
     @GetMapping("/Movies/{id}")
     public ResponseEntity<Movie> getMovie(@PathVariable Integer id) {
-        if (movieService.getMovie(id) != null) {
-            return ResponseEntity.ok(movieService.getMovie(id));
-        }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        return ResponseEntity.ok(movieService.getMovie(id));
     }
 
     @PostMapping("/Movies")
     public ResponseEntity<Movie> addMovie(@RequestBody Movie movie) {
-        try {
-            movieService.addMovie(movie);
-            return ResponseEntity.ok(movie);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(movie);
-        }
+        movieService.addMovie(movie);
+        return ResponseEntity.ok(movie);
     }
 
-    @PutMapping("/Movies")
-    public ResponseEntity<Movie> updateMovie(@RequestBody Movie movie) {
+    @PutMapping("/Movies/{id}")
+    public ResponseEntity<Movie> updateMovie(@RequestBody Movie movie, @PathVariable int id) {
+        movieService.updateMovie(movie, id);
+        return ResponseEntity.ok(movieService.getMovie(id));
+    }
 
+    @DeleteMapping("/Movies/{id}")
+    public ResponseEntity<Void> deleteMovie(@PathVariable int id) {
+        movieService.deleteMovie(id);
+        return ResponseEntity.ok().build();
     }
 }
