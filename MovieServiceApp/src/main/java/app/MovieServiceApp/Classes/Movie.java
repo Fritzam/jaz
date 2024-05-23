@@ -1,17 +1,32 @@
 package app.MovieServiceApp.Classes;
 
+import jakarta.persistence.*;
 import org.springframework.stereotype.Component;
 
+@Entity
 public class Movie {
-    private static int nextID = 1;
-    private int ID;
-    private String name;
-    private String category;
 
-    public Movie(String name, String category) {
-        this.ID = nextID++;
-        this.name = name;
-        this.category = category;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    int ID;
+    @Column
+    private String name;
+
+    @Enumerated(EnumType.STRING)
+    private Categories category;
+
+    @Column
+    private double Score;
+
+    public double getScore() {
+        return Score;
+    }
+
+    public void setScore(double score) {
+        Score = score;
+    }
+
+    public Movie() {
     }
 
     public int getID() {
@@ -30,11 +45,5 @@ public class Movie {
         this.name = name;
     }
 
-    public String getCategory() {
-        return category;
-    }
 
-    public void setCategory(String category) {
-        this.category = category;
-    }
 }
