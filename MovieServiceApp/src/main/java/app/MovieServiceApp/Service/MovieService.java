@@ -21,11 +21,11 @@ public class MovieService {
         return movieRepository.findById(id).orElse(null);
     }
 
-    public Movie addMovie(Movie movie) {
-        return movieRepository.save(movie);
+    public void addMovie(Movie movie) {
+        movieRepository.save(movie);
     }
 
-    public Movie updateMovie(int id, Movie movie) {
+    public void updateMovie(int id, Movie movie) {
         if (movieRepository.findById(id).isPresent()){
             movieRepository.save(movie);
         }

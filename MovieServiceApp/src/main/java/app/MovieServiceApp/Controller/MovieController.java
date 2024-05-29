@@ -20,10 +20,10 @@ public class MovieController {
         this.validator = validator;
     }
 
-    @GetMapping("/Movies")
+    /*@GetMapping("/Movies")
     public ResponseEntity<List<Movie>> getMovieList() {
         return ResponseEntity.ok(movieService.getMovies());
-    }
+    }*/
 
     @GetMapping("/Movies/{id}")
     public ResponseEntity<Movie> getMovie(@PathVariable Integer id) {
@@ -38,7 +38,7 @@ public class MovieController {
 
     @PutMapping("/Movies/{id}")
     public ResponseEntity<Movie> updateMovie(@RequestBody Movie movie, @PathVariable int id) {
-        movieService.updateMovie(movie, id);
+        movieService.updateMovie(id, movie);
         return ResponseEntity.ok(movieService.getMovie(id));
     }
 
