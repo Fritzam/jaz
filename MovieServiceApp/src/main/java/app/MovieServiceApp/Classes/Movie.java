@@ -1,11 +1,14 @@
 package app.MovieServiceApp.Classes;
 
 import jakarta.persistence.*;
+import jdk.jfr.Name;
 import org.springframework.stereotype.Component;
 
 @Entity
+@NamedQuery(name = "Movie.updateAvailabilityByName", query = "update Movie set is_available = true where name= :name")
+@NamedQuery(name = "deleteByID", query="delete from Movie where id = :id")
+@NamedQuery(name = "findById", query="select m from Movie m where id = :id")
 public class Movie {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int ID;

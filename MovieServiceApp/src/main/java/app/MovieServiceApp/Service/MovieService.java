@@ -18,7 +18,7 @@ public class MovieService {
     }
 
     public Movie getMovie(int id) {
-        return movieRepository.findById(id).orElse(null);
+        return movieRepository.findById(id);
     }
 
     public void addMovie(Movie movie) {
@@ -26,15 +26,16 @@ public class MovieService {
     }
 
     public void updateMovie(int id, Movie movie) {
-        if (movieRepository.findById(id).isPresent()){
+        if (movieRepository.findById(id).isPresent()) {
             movieRepository.save(movie);
         }
     }
-
     public void deleteMovie(int id) {
-        movieRepository.deleteById(id);
+        movieRepository.deleteByID(id);
     }
 
-
+    public void changeAvailableStatus(String name) {
+        movieRepository.updateAvailabilityByName(name);
+    }
 }
 
