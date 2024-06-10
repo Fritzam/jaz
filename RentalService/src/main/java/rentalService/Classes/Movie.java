@@ -1,25 +1,12 @@
-package app.MovieServiceApp.Classes;
-
-import jakarta.persistence.*;
-import jdk.jfr.Name;
-import org.springframework.stereotype.Component;
-
-@Entity
-@NamedQuery(name = "Movie.updateAvailabilityByName", query = "update Movie set is_available = true where name= :name")
+package rentalService.Classes;
 public class Movie {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int ID;
-    @Column
-    private String name;
 
-    @Enumerated(EnumType.STRING)
+    int ID;
+    private String name;
     private Categories category;
 
-    @Column
     private double Score;
 
-    @Column
     private boolean is_available;
 
     public boolean isAvailable() {

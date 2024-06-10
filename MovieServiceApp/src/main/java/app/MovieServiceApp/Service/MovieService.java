@@ -3,6 +3,8 @@ package app.MovieServiceApp.Service;
 import app.MovieServiceApp.Classes.Movie;
 import app.MovieServiceApp.Storage.MovieRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,7 +20,7 @@ public class MovieService {
     }
 
     public Movie getMovie(int id) {
-        return movieRepository.findById(id);
+        return movieRepository.findById(id).orElse(null);
     }
 
     public void addMovie(Movie movie) {
@@ -31,11 +33,23 @@ public class MovieService {
         }
     }
     public void deleteMovie(int id) {
-        movieRepository.deleteByID(id);
+        movieRepository.deleteById(id);
     }
 
-    public void changeAvailableStatus(String name) {
-        movieRepository.updateAvailabilityByName(name);
+    public ResponseEntity<Void> setMovieUnavailable(String name) {
+        if (movieRepository.findMovieByName(name).isPresent()) {
+            movieRepository.rentMovie(name);
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    public ResponseEntity<Void> changeAvailableStatus(String name) {
+        if (movieRepository.findMovieByName(name).isPresent()) {
+            movieRepository.updateAvailabilityByName(name);
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.notFound().build();
     }
 }
 

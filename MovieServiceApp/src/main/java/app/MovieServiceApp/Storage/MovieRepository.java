@@ -6,31 +6,21 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.Optional;
+
 public interface MovieRepository extends JpaRepository<Movie, Integer> {
 
     @Transactional
     @Modifying
     void updateAvailabilityByName(String name);
 
+    @Override
+    Optional<Movie> findById(Integer integer);
+
     @Transactional
     @Modifying
-    @Query(name = "deleteByID")
-    void deleteByID(int id);
-
-    @Query(name = "findById")
-    Movie findById(int id);
-
-    //public Movie getMovie(int id) {
-    //        return movieRepository.findById(id).orElse(null);
-    //    }public void addMovie(Movie movie) {
-    //        movieRepository.save(movie);
-    //    }public void updateMovie(int id, Movie movie) {
-    //        if (movieRepository.findById(id).isPresent()) {
-    //            movieRepository.save(movie);
-    //        }
-    //    }
-    //
-    //
-    //
+    @Query("update Movie set is_available = false where name= ?1")
+    void rentMovie(String name);
+    Optional<Movie> findMovieByName(String name);
 
 }

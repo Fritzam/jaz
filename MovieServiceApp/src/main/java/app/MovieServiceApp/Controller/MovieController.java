@@ -50,7 +50,13 @@ public class MovieController {
 
     @PutMapping("/Movies/setAvailable/{name}")
     public ResponseEntity<Void> updateAvailability(@PathVariable String name) {
-        movieService.changeAvailableStatus(name);
-        return ResponseEntity.ok().build();
+        return movieService.changeAvailableStatus(name);
     }
+
+    @PutMapping("/Movies/setUnavailable/{name}")
+    public ResponseEntity<Void> rentMovie(@PathVariable String name) {
+        return movieService.setMovieUnavailable(name);
+    }
+
+
 }
